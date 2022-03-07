@@ -1,5 +1,11 @@
 package proxy
 
+import (
+	"bytes"
+	"encoding/csv"
+	"strconv"
+)
+
 const (
 	HTTP   = "http"
 	HTTPS  = "https"
@@ -24,4 +30,15 @@ func ValidateType(proxyType string) bool {
 	default:
 		return false
 	}
+}
+
+func (p Proxy) String() string {
+	buf := new(bytes.Buffer)
+	csvWriter := csv.NewWriter(buf)
+	err := csvWriter.Write([]string{p.Ipv4, strconv.Itoa(p.Port), p.ProxyType})
+	if err != nil {
+		return ""
+	}
+	csvWriter.Flush()
+	return buf.String()
 }

@@ -7,6 +7,7 @@ import (
 	"local/proxyscraper/parser"
 	"local/proxyscraper/parser/proxy"
 	"net/http"
+	"os"
 	"sync"
 )
 
@@ -115,7 +116,7 @@ out:
 			}
 		case err := <-errorCh:
 			if debug && err != nil {
-				fmt.Println(err)
+				fmt.Fprintln(os.Stderr, err)
 			}
 		}
 	}
