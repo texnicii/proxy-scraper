@@ -1,0 +1,31 @@
+[
+  {
+    "url": "https://www.socks-proxy.net",
+    "type": "socks4"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt",
+    "type": "http"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/shiftytr/proxy-list/master/http.txt",
+    "type": "http"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/shiftytr/proxy-list/master/https.txt",
+    "type": "https"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/shiftytr/proxy-list/master/socks4.txt",
+    "type": "socks4"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/shiftytr/proxy-list/master/socks5.txt",
+    "type": "socks5"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list",
+    "type": "http",
+    "parser": "JsonParser"
+  }
+]
