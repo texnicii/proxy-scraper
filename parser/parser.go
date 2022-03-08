@@ -1,7 +1,7 @@
 package parser
 
 import (
-	. "local/proxyscraper/parser/proxy"
+	. "github.com/texnicii/proxy-scraper/parser/proxy"
 )
 
 type Parser interface {

@@ -3,9 +3,9 @@ package proxyscraper
 import (
 	"errors"
 	"fmt"
+	"github.com/texnicii/proxy-scraper/parser"
+	"github.com/texnicii/proxy-scraper/parser/proxy"
 	"io"
-	"local/proxyscraper/parser"
-	"local/proxyscraper/parser/proxy"
 	"net/http"
 	"os"
 	"sync"

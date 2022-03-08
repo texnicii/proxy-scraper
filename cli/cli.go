@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"local/proxyscraper"
+	"github.com/texnicii/proxy-scraper"
 	"os"
 	"time"
 )
