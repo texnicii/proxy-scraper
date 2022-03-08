@@ -2,7 +2,7 @@ package parser
 
 import (
 	"errors"
-	"local/proxyscraper/parser/proxy"
+	"github.com/texnicii/proxy-scraper/parser/proxy"
 	"regexp"
 	"strconv"
 )

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"local/proxyscraper/parser/proxy"
+	"github.com/texnicii/proxy-scraper/parser/proxy"
 )
 
 type JsonProxiesParser struct {
