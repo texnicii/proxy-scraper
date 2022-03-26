@@ -2,10 +2,14 @@ package proxyscraper
 
 import (
 	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
 	"os"
 )
 
 const DefaultFilename string = "proxy_sources.json"
+const DefaultRemoteSourcesURL string = "https://raw.githubusercontent.com/texnicii/proxy-scraper/master/proxy_sources.json"
 const DefaultParserName string = "UniversalProxiesParser"
 
 type ProxySource struct {
@@ -20,7 +24,7 @@ func NewProxySourcesFromJson(jsonContent []byte) ProxySourceList {
 	sources := ProxySourceList{}
 	jsonErr := json.Unmarshal(jsonContent, &sources)
 	if jsonErr != nil {
-		panic("Json read error")
+		panic(jsonErr)
 	}
 	for k := range sources {
 		if sources[k].ParserName == "" {
@@ -32,9 +36,25 @@ func NewProxySourcesFromJson(jsonContent []byte) ProxySourceList {
 
 func NewProxySourcesFromFile() ProxySourceList {
 	workingDir, _ := os.Getwd()
-	content, err := os.ReadFile(workingDir + string(os.PathSeparator) + DefaultFilename)
+	localSourcesFilename := workingDir + string(os.PathSeparator) + DefaultFilename
+	var content []byte
+	var err error
+	if _, err = os.Stat(localSourcesFilename); err == nil {
+		content, err = os.ReadFile(localSourcesFilename)
+	} else {
+		var response *http.Response
+		response, err = http.Get(DefaultRemoteSourcesURL)
+		defer func(Body io.ReadCloser) {
+			err = Body.Close()
+		}(response.Body)
+		if err == nil && response.StatusCode == 200 {
+			content, err = io.ReadAll(response.Body)
+		} else {
+			err = errors.New("download sources file error")
+		}
+	}
 	if err != nil {
-		panic("Open source file error")
+		panic(err)
 	}
 	return NewProxySourcesFromJson(content)
 }
