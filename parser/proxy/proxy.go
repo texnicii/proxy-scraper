@@ -42,3 +42,8 @@ func (p Proxy) String() string {
 	csvWriter.Flush()
 	return buf.String()
 }
+
+// GetAddress will return proxy address like ip:port
+func (p Proxy) GetAddress() string {
+	return p.Ipv4 + ":" + strconv.Itoa(p.Port)
+}
