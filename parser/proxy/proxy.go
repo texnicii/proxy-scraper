@@ -14,9 +14,9 @@ const (
 )
 
 type Proxy struct {
-	Ipv4      string
-	Port      int
-	ProxyType string
+	Ipv4      string `json:"ipv_4"`
+	Port      int    `json:"port"`
+	ProxyType string `json:"proxy_type"`
 }
 
 func NewProxy(ipv4 string, port int, proxyType string) Proxy {
