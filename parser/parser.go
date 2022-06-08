@@ -18,6 +18,8 @@ func InitParser(name string, proxyType string) Parser {
 	switch name {
 	case "JsonParser":
 		parser = new(JsonProxiesParser)
+	case "GndParser":
+		parser = new(GndParser)
 	default:
 		parser = new(UniversalProxiesParser)
 	}

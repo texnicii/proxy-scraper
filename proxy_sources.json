@@ -27,5 +27,25 @@
     "url": "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list",
     "type": "http",
     "parser": "JsonParser"
+  },
+  {
+    "url": "https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&protocols=socks5",
+    "type": "socks5",
+    "parser": "GndParser"
+  },
+  {
+    "url": "https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&protocols=socks4",
+    "type": "socks4",
+    "parser": "GndParser"
+  },
+  {
+    "url": "https://proxylist.geonode.com/api/proxy-list?limit=1000&page=1&protocols=https",
+    "type": "socks4",
+    "parser": "GndParser"
+  },
+  {
+    "url": "https://proxylist.geonode.com/api/proxy-list?limit=1000&page=1&protocols=http",
+    "type": "socks4",
+    "parser": "GndParser"
   }
 ]
