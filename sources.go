@@ -3,6 +3,7 @@ package proxyscraper
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -16,6 +17,11 @@ type ProxySource struct {
 	Url        string `json:"url"`
 	ProxyType  string `json:"type"`
 	ParserName string `json:"parser"`
+	Pagination struct {
+		Start   int    `json:"start"`
+		End     int    `json:"end"`
+		Pattern string `json:"pattern"`
+	}
 }
 
 type ProxySourceList []ProxySource
@@ -29,6 +35,14 @@ func NewProxySourcesFromJson(jsonContent []byte) ProxySourceList {
 	for k := range sources {
 		if sources[k].ParserName == "" {
 			sources[k].ParserName = DefaultParserName
+		}
+		//source has a pages
+		if sources[k].Pagination.Pattern != "" {
+			for i := sources[k].Pagination.Start; i <= sources[k].Pagination.End; i++ {
+				copiedSource := sources[k]
+				copiedSource.Url = copiedSource.Url + fmt.Sprintf(copiedSource.Pagination.Pattern, i)
+				sources = append(sources, copiedSource)
+			}
 		}
 	}
 	return sources

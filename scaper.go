@@ -36,18 +36,18 @@ func Get(args ...bool) map[string]proxy.Proxy {
 // StartDownload split sources by chunks and run downloader
 func StartDownload(sources ProxySourceList, contentCh chan<- ContentContainer, errCh chan<- error) {
 	defer close(contentCh)
-	chunkNum := 0
 	sourcesLen := len(sources)
 	if sourcesLen <= ChunkSize {
 		AsyncDownload(sources, contentCh, errCh)
 	} else {
-		for i := range sources {
-			if i%ChunkSize == 0 || i == sourcesLen-1 {
-				chunkStartIndex := chunkNum * ChunkSize
-				chunkSources := sources[chunkStartIndex : chunkStartIndex+ChunkSize]
-				AsyncDownload(chunkSources, contentCh, errCh)
-				chunkNum++
+		for i := 0; i <= sourcesLen/ChunkSize; i++ {
+			chunkStartIndex := i * ChunkSize
+			chunkEndIndex := chunkStartIndex + ChunkSize
+			if chunkEndIndex > sourcesLen {
+				chunkEndIndex = sourcesLen
 			}
+			chunkSources := sources[chunkStartIndex:chunkEndIndex]
+			AsyncDownload(chunkSources, contentCh, errCh)
 		}
 	}
 }
@@ -62,11 +62,14 @@ func AsyncDownload(sources ProxySourceList, contentCh chan<- ContentContainer, e
 			if source.Url == "" {
 				return
 			}
-			response, err := http.Get(source.Url)
+			httpClient := new(http.Client)
+			request, err := http.NewRequest("GET", source.Url, nil)
+			request.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36")
+			response, err := httpClient.Do(request)
 			if err != nil {
-				errCh <- err
 				return
 			}
+			defer response.Body.Close()
 			content, _ := io.ReadAll(response.Body)
 			if len(content) == 0 {
 				errCh <- errors.New("empty content (" + source.Url + ")")
