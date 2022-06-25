@@ -14,9 +14,9 @@ const (
 )
 
 type Proxy struct {
-	Ipv4      string `json:"ipv_4"`
+	Ipv4      string `json:"ip"`
 	Port      int    `json:"port"`
-	ProxyType string `json:"proxy_type"`
+	ProxyType string `json:"type"`
 }
 
 func NewProxy(ipv4 string, port int, proxyType string) Proxy {
@@ -35,7 +35,7 @@ func ValidateType(proxyType string) bool {
 func (p Proxy) String() string {
 	buf := new(bytes.Buffer)
 	csvWriter := csv.NewWriter(buf)
-	err := csvWriter.Write([]string{p.Ipv4, strconv.Itoa(p.Port), p.ProxyType})
+	err := csvWriter.Write([]string{p.GetAddress(), p.ProxyType})
 	if err != nil {
 		return ""
 	}
