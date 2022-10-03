@@ -14,3 +14,6 @@ Stored in: proxy_2022-06-25-113230.csv
 - Import this package `go get -u github.com/texnicii/proxy-scraper`
 - Call in your golang application
 `proxyscraper.Get()`
+
+---
+See also [Proxy checker service](https://github.com/texnicii/proxy-checker)
